@@ -121,4 +121,4 @@ def modify_reservations(request):
                 reservation.state = 'R'
                 reservation.save()
 
-    return redirect('/admin/actions-panel')
+    return redirect('actions-panel')
