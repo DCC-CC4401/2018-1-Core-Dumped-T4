@@ -9,6 +9,7 @@ from datetime import datetime, timedelta, date
 import pytz
 from django.utils.timezone import localtime
 
+
 @login_required
 def user_panel(request):
     user = request.user
@@ -19,6 +20,7 @@ def user_panel(request):
         'users': users
     }
     return render(request, 'user_panel.html', context)
+
 
 @login_required
 def items_panel(request):
@@ -32,6 +34,7 @@ def items_panel(request):
         'spaces': spaces
     }
     return render(request, 'items_panel.html', context)
+
 
 @login_required
 def actions_panel(request):
@@ -47,7 +50,7 @@ def actions_panel(request):
 
     colores = {'A': 'rgba(0,153,0,0.7)',
                'P': 'rgba(51,51,204,0.7)',
-                'R': 'rgba(153, 0, 0,0.7)'}
+               'R': 'rgba(153, 0, 0,0.7)'}
 
     reservations = Reservation.objects.filter(state='P').order_by('starting_date_time')
     current_week_reservations = Reservation.objects.filter(starting_date_time__week = current_week)
@@ -89,7 +92,6 @@ def actions_panel(request):
     delta = (datetime.strptime(current_date, "%Y-%m-%d").isocalendar()[2]) - 1
     monday = (
         (datetime.strptime(current_date, "%Y-%m-%d") - timedelta(days=delta)).strftime("%d/%m/%Y"))
-
 
     context = {
         'reservations_query': reservations,
