@@ -111,7 +111,7 @@ def modify_reservations(request):
     if request.method == "POST":
 
         accept = True if (request.POST["accept"] == "1") else False
-        reservations = Reservation.objects.filter(id__in=request.POST["selected"])
+        reservations = Reservation.objects.filter(id__in=request.POST.getlist("selected"))
         if accept:
             for reservation in reservations:
                 reservation.state = 'A'
@@ -121,4 +121,30 @@ def modify_reservations(request):
                 reservation.state = 'R'
                 reservation.save()
 
+    return redirect('actions-panel')
+
+
+@login_required
+def lost_loans(request):
+    user = request.user
+    if not (user.is_superuser and user.is_staff):
+        return redirect('/')
+    if request.method == "POST":
+        loans = Loan.objects.filter(id__in=request.POST.getlist("loans"))
+        for loan in loans:
+            loan.state = Loan.PERDIDO
+            loan.save()
+    return redirect('actions-panel')
+
+
+@login_required
+def received_loans(request):
+    user = request.user
+    if not (user.is_superuser and user.is_staff):
+        return redirect('/')
+    if request.method == "POST":
+        loans = Loan.objects.filter(id__in=request.POST.getlist("loans"))
+        for loan in loans:
+            loan.state = Loan.RECIBIDO
+            loan.save()
     return redirect('actions-panel')
