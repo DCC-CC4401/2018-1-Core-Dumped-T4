@@ -6,6 +6,7 @@ urlpatterns = [
     path('user-panel/', views.user_panel, name="user-panel"),
     path('items-panel/', views.items_panel, name="items-panel"),
     path('actions-panel/', views.actions_panel, name="actions-panel"),
-    path('actions-panel/modify', views.modify_reservations, name="modify_reservations")
-
+    path('actions-panel/modify', views.modify_reservations, name="modify_reservations"),
+    path('actions-panel/receive-loans', views.modify_loans, name="receive_loans"),
+    path('actions-panel/lost-loans', views.modify_loans, name="lost_loans")
 ]
