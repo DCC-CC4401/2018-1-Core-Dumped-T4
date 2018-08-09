@@ -4,4 +4,21 @@ from django.db import models
 
 
 class Loan(Action):
-    article = models.ForeignKey(Article, on_delete=models.CASCADE)
+    VIGENTE = 'V'
+    CADUCADO = 'C'
+    PERDIDO = 'L'
+    STATES = (
+        (VIGENTE, 'Vigente'),
+        (CADUCADO, 'Caducado'),
+        (PERDIDO, 'Perdido')
+    )
+    state = models.CharField(
+        'Estado',
+        choices=STATES,
+        max_length=1,
+        default=VIGENTE
+    )
+    article = models.ForeignKey(
+        Article,
+        on_delete=models.CASCADE
+    )
