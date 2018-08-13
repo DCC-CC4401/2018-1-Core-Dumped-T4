@@ -3,6 +3,7 @@ from django.contrib.auth.decorators import login_required
 from reservationsApp.models import Reservation
 from loansApp.models import Loan
 from articlesApp.models import Article
+from articlesApp.forms import ArticleForm
 from spacesApp.models import Space
 from mainApp.models import User
 from datetime import datetime, timedelta, date
@@ -29,9 +30,11 @@ def items_panel(request):
         return redirect('/')
     articles = Article.objects.all()
     spaces = Space.objects.all()
+    form = ArticleForm()
     context = {
         'articles': articles,
-        'spaces': spaces
+        'spaces': spaces,
+        'form': form,
     }
     return render(request, 'items_panel.html', context)
 
@@ -148,3 +151,26 @@ def received_loans(request):
             loan.state = Loan.RECIBIDO
             loan.save()
     return redirect('actions-panel')
+
+
+@login_required
+def new_article(request):
+    user = request.user
+    if not (user.is_superuser and user.is_staff):
+        return redirect('/')
+    if request.method == "POST":
+        form = ArticleForm(request.POST)
+        if form.is_valid():
+            form.save()
+        return redirect('items-panel')
+
+
+@login_required
+def delete_article(request):
+    user = request.user
+    if not (user.is_superuser and user.is_staff):
+        return redirect('/')
+    if request.method == "POST":
+        article = Article.objects.get(id=request.POST.get('article_id'))
+        article.delete()
+        return redirect('items-panel')
