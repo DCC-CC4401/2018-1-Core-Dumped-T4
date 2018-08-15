@@ -9,6 +9,7 @@ from datetime import datetime, timedelta
 import random, os
 import pytz
 from django.contrib import messages
+
 @login_required
 def loan_data(request, loan_id):
     try:

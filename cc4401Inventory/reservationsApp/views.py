@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
-from .models import Reservation
+from django.contrib.auth.decorators import login_required
+from reservationsApp.models import Reservation
 from django.contrib import messages
 
 
@@ -15,3 +16,21 @@ def delete(request):
             messages.warning(request, 'Ha ocurrido un error y la reserva no se ha eliminado')
 
         return redirect('user_data', user_id=request.user.id)
+
+
+@login_required
+def reservation_data(request, reservation_id):
+    try:
+        reservation_bacan = Reservation.objects.get(id=reservation_id)
+        space = reservation_bacan.space
+
+        context = {
+            'user': reservation_bacan.user,
+            'reservation': reservation_bacan,
+            'space': space,
+            }
+
+        return render(request, 'reservation_data.html', context)
+    except Exception as e:
+        print(e)
+        return redirect('/')
