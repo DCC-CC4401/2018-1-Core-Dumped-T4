@@ -15,7 +15,7 @@
 
       <div class="row">
         <h1 class="article-name">
-          Prestamo de:{{ user.first_name }} {{ user.last_name }}
+          Prestamo de {{ user.first_name }} {{ user.last_name }}
         {% if loan.state == "A" %}
             <span class="badge badge-pill badge-success"><i class="fas fa-chevron-left"></i> {{  loan.get_state_display }}</span>
           {% elif loan.state == "R" %}
@@ -28,7 +28,7 @@
 
 
       <div class="card">
-        <div class="card-header article-description-title">Descripción</div>
+        <div class="card-header article-description-title">Resumen del préstamo</div>
         <div class="card-body">
           <p class="card-text">{{ article.description }}</p>
         </div>
@@ -43,15 +43,22 @@
             <b>Hora inicio: {{ loan.ending_date_time }}</b>
         </div>
       </div>
-        <div class = "row reservation-history-container">
-          <h3 class="block-title"> Historial de reservas</h3>
-            <div class="reservation-history">
-                <ul>
-                    {% for elemento in last_loans %}
-                        <li>{{ elemento }}</li>
-                    {% endfor %}
-                </ul>
-            </div>
+
+        <div class = "row">
+          <h3 class="block-title">¿Perdió el artículo?</h3>
+        </div>
+        <div class="row">
+            <form method="POST" action="{% url "change"%}">{% csrf_token %}{
+            <!-- El currentuser es el usuario que está logueado, lo pasa por diccionario en el view de la pagina -->
+            <!-- Así el botón solo se muestra si es que el que hizo la reserva es el mismo que está viendola -->
+            {% if user.id == currentuser.id and article.state != 'L' %}
+                <input type="hidden" value = "{{ article.id }}" name="artid">
+                <input type="hidden" value = "{{ loan.id }}" name="loanid">
+                <button type="submit" class="btn btn-danger">Reportar como perdido</button>
+            {% else %}
+            <button type="button" class="btn btn-danger" disabled=''>Reportar como perdido</button>
+            {% endif %}
+            </form>
         </div>
     </div>
 

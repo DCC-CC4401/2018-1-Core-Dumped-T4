@@ -14,7 +14,7 @@
     <div class="col-md-4 offset-1">
 
       <div class="row">
-        <h1 class="space-name">
+        <h1 class="article-name">
           Reserva de {{ user.first_name }} {{ user.last_name }}
         {% if reservation.state == "A" %}
             <span class="badge badge-pill badge-success"><i class="fas fa-chevron-left"></i> {{  reservation.get_state_display }}</span>
@@ -28,7 +28,7 @@
 
 
       <div class="card">
-        <div class="card-header article-description-title">Descripción</div>
+        <div class="card-header article-description-title">Resumen de la reserva</div>
         <div class="card-body">
           <p class="card-text">{{ space.description }}</p>
         </div>
@@ -36,7 +36,7 @@
     </div>
 
     <div class = "col-md-5 offset-2">
-      <h3 class="block-title">Detalles del prestamo</h3>
+      <h3 class="block-title">Detalles de la reserva</h3>
       <div class="card">
         <div class="card body">
             <b>Fecha inicio: {{ reservation.starting_date_time }}</b>
@@ -44,7 +44,7 @@
         </div>
       </div>
         <div class = "row reservation-history-container">
-          <h3 class="block-title"> Historial de reservas</h3>
+          <h3 class="block-title">¿Cancelar reserva?</h3>
             <div class="reservation-history">
                 <ul>
                 </ul>
