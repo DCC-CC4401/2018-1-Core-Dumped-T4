@@ -30,8 +30,23 @@
       <div class="card">
         <div class="card-header article-description-title">Resumen de la reserva</div>
         <div class="card-body">
-          <p class="card-text">{{ space.description }}</p>
-        </div>
+             <div class="row">
+                 <div class="col-sm-6">
+                     {% if space.image %}
+                         <img src= " {% static article.image.url %}" class="img-fluid" alt="Foto" style="height: 400px" />
+                     {% else %}
+                         <img class="card-img-top" src="{% static 'img/items/default_article.jpg' %}" alt="Card image cap">
+                     {% endif %}
+                 </div>
+                 <div class="col-sm-6">
+                     {% if space.description %}
+                     <p class="card-text">{{space.description}}</p>
+                     {% else %}
+                     <p class="card-text">No hay descripción disponible</p>
+                     {%  endif %}
+                 </div>
+             </div>
+         </div>
       </div>
     </div>
 
