@@ -12,10 +12,10 @@
 
   <div class="row">
     <div class="col-md-4 offset-1">
-
+    <!-- Hay que usar la palabra usuario, no user, o sino se buguea el header-->
       <div class="row">
         <h1 class="article-name">
-          Reserva de {{ user.first_name }} {{ user.last_name }}
+          Reserva de {{ usuario.first_name }} {{ usuario.last_name }}
         {% if reservation.state == "A" %}
             <span class="badge badge-pill badge-success"><i class="fas fa-chevron-left"></i> {{  reservation.get_state_display }}</span>
           {% elif reservation.state == "R" %}

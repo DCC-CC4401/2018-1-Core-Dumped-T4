@@ -12,10 +12,10 @@
 
   <div class="row">
     <div class="col-md-4 offset-1">
-
+    <!-- Hay que usar la palabra usuario, no user, o sino se buguea el header-->
       <div class="row">
         <h1 class="article-name">
-          Prestamo de {{ user.first_name }} {{ user.last_name }}
+          Prestamo de {{ usuario.first_name }} {{ usuario.last_name }}
         {% if loan.state == "A" %}
             <span class="badge badge-pill badge-success"><i class="fas fa-chevron-left"></i> {{  loan.get_state_display }}</span>
           {% elif loan.state == "R" %}
@@ -48,10 +48,10 @@
           <h3 class="block-title">¿Perdió el artículo?</h3>
         </div>
         <div class="row">
-            <form method="POST" action="{% url "change"%}">{% csrf_token %}{
+            <form method="POST" action="{% url "change"%}">{% csrf_token %}
             <!-- El currentuser es el usuario que está logueado, lo pasa por diccionario en el view de la pagina -->
             <!-- Así el botón solo se muestra si es que el que hizo la reserva es el mismo que está viendola -->
-            {% if user.id == currentuser.id and article.state != 'L' %}
+            {% if usuario.id == currentuser.id and article.state != 'L' %}
                 <input type="hidden" value = "{{ article.id }}" name="artid">
                 <input type="hidden" value = "{{ loan.id }}" name="loanid">
                 <button type="submit" class="btn btn-danger">Reportar como perdido</button>

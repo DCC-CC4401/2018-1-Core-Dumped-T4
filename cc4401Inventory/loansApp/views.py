@@ -24,11 +24,11 @@ def change(request):
 def loan_data(request, loan_id):
     try:
         loan_bacan = Loan.objects.get(id=loan_id)
-        article=loan_bacan.article
+        article = loan_bacan.article
         currentuser = request.user
 
         context = {
-            'user':loan_bacan.user,
+            'usuario':loan_bacan.user,
             'loan':loan_bacan,
             'article': article,
             'currentuser':currentuser,

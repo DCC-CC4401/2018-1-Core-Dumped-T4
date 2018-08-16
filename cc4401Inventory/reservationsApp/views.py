@@ -23,11 +23,14 @@ def reservation_data(request, reservation_id):
     try:
         reservation_bacan = Reservation.objects.get(id=reservation_id)
         space = reservation_bacan.space
+        currentuser = request.user
+
 
         context = {
-            'user': reservation_bacan.user,
+            'usuario': reservation_bacan.user,
             'reservation': reservation_bacan,
             'space': space,
+            'currentuser': currentuser,
             }
 
         return render(request, 'reservation_data.html', context)
