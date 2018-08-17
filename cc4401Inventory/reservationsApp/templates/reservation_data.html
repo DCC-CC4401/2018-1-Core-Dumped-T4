@@ -59,7 +59,18 @@
         </div>
       </div>
         <div class = "row reservation-history-container">
-          <h3 class="block-title">¿Cancelar reserva?</h3>
+        <div class="row-centered">
+            <form method="POST" action="{% url 'delete_reservation'%}">{% csrf_token %}
+            <!-- El currentuser es el usuario que está logueado, lo pasa por diccionario en el view de la pagina -->
+            <!-- Así el botón solo se muestra si es que el que hizo la reserva es el mismo que está viendola -->
+            {% if usuario.id == currentuser.id and space.state != 'L' %}
+                {% if reservation.state == 'P' %}
+                    <input hidden id="reservation-{{ reservation.id }}" name="reservation" value="{{ reservation.id }}" >
+                    <input class="delete-button" type="submit" value="Eliminar Reserva">
+                {% endif %}
+            {% endif %}
+            </form>
+        </div>
             <div class="reservation-history">
                 <ul>
                 </ul>
@@ -68,5 +79,4 @@
     </div>
 
   </div>
-</div>
 {% endblock %}
