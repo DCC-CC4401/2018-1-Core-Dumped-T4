@@ -1,0 +1,79 @@
+
+{% extends 'application_layout.html' %}
+
+{% load static %}
+
+{% block title %}
+  Ficha del préstamo: {{ loan.id }}
+{% endblock %}
+
+
+{% block body %}
+
+  <div class="row">
+    <div class="col-md-4 offset-1">
+    <!-- Hay que usar la palabra usuario, no user, o sino se buguea el header-->
+      <div class="row">
+        <h1 class="article-name">
+          Prestamo de {{ usuario.first_name }} {{ usuario.last_name }}
+        {% if loan.state == "A" %}
+            <span class="badge badge-pill badge-success"><i class="fas fa-chevron-left"></i> {{  loan.get_state_display }}</span>
+          {% elif loan.state == "R" %}
+            <span class="badge badge-pill badge-danger"><i class="fas fa-chevron-left"></i> {{  loan.get_state_display }}</span>
+          {% elif loan.state == "P" %}
+            <span class="badge badge-pill badge-warning"><i class="fas fa-chevron-left"></i> {{  loan.get_state_display }}</span>
+          {% endif %}
+         </h1>
+      </div>
+
+
+      <div class="card">
+        <div class="card-header article-description-title">Resumen del préstamo</div>
+         <div class="card-body">
+             <div class="row">
+                 <div class="col-sm-6">
+                     {% if article.image %}
+                         <img src= " {% static article.image.url %}" class="img-fluid" alt="Foto"  />
+                     {% else %}
+                         <img class="card-img-top" src="{% static 'img/items/default_article.jpg' %}" alt="Card image cap">
+                     {% endif %}
+                 </div>
+                 <div class="col-sm-6">
+                     <p class="card-text">{{article.description}}</p>
+                 </div>
+             </div>
+         </div>
+      </div>
+    </div>
+
+    <div class = "col-md-5 offset-2">
+      <h3 class="block-title">Detalles del prestamo</h3>
+      <div class="card">
+        <div class="card body">
+            <b>Hora inicio: {{ loan.starting_date_time }}</b>
+            <b>Hora inicio: {{ loan.ending_date_time }}</b>
+        </div>
+      </div>
+
+        <div class = "row">
+          <h3 class="block-title">¿Perdió el artículo?</h3>
+        </div>
+        <div class="row">
+            <form method="POST" action="{% url "change"%}">{% csrf_token %}
+            <!-- El currentuser es el usuario que está logueado, lo pasa por diccionario en el view de la pagina -->
+            <!-- Así el botón solo se muestra si es que el que hizo la reserva es el mismo que está viendola -->
+            {% if usuario.id == currentuser.id and article.state != 'L' %}
+                <input type="hidden" value = "{{ article.id }}" name="artid">
+                <input type="hidden" value = "{{ loan.id }}" name="loanid">
+                <button type="submit" class="btn btn-danger">Reportar como perdido</button>
+            {% else %}
+            <button type="button" class="btn btn-danger" disabled=''>Reportar como perdido</button>
+            {% endif %}
+            </form>
+        </div>
+
+    </div>
+
+  </div>
+</div>
+{% endblock %}
