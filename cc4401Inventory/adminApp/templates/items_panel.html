@@ -29,7 +29,6 @@
     <div class="row">
       <div class="col-md-6 admin-table-container">
         <h1>Articulos</h1>
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#newArticleModal">Nuevo Articulo</button>
         <table class="table table-striped">
           <thead>
           <tr>
@@ -44,14 +43,10 @@
           <tr>
             <td>{{ article.id }}</td>
             <td>{{ article.name }}</td>
-            <td>{{ article.get_state_display }}</td>
+            <td>{{ article.state }}</td>
             <td class="center-column">
-              <form method="post">
-                  {% csrf_token %}
-                  <input title="Id of article" name="article_id" value="{{ article.id }}" hidden>
-                <a class="table-button" href="{% url 'article_data_admin' article.id %}"><i class="fas fa-edit"></i></a>
-                <button type="submit" formaction="{% url 'delete-article' %}" class="btn" style="background-color: transparent; color: red"><i class="fas fa-trash"></i></button>
-              </form>
+              <a class="table-button" href="{% url 'article_data_admin' article.id %}"><i class="fas fa-edit"></i></a>
+              <a class="table-button" href="#"><i class="fas fa-trash"></i></a>
             </td>
           </tr>
           {% endfor %}
@@ -60,7 +55,6 @@
       </div>
       <div class="col-md-6 admin-table-container">
         <h1>Espacios</h1>
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#newSpaceModal">Nuevo Espacio</button>
         <table class="table table-striped">
           <thead>
           <tr>
@@ -73,11 +67,14 @@
           <tbody>
           {% for space in spaces %}
           <tr>
+
             <td>{{ space.id }}</td>
-            <td>{{ space.name }}</td>
+
+              <td><a href="{% url 'space_data' space.id %}">{{ space.name }}</a></td>
+
             <td>{{ space.get_state_display }}</td>
             <td class="center-column">
-              <a class="table-button" href="#"><i class="fas fa-edit"></i></a>
+              <a class="table-button" href="{% url 'space_data_admin' space.id %}"><i class="fas fa-edit"></i></a>
               <a class="table-button" href="#"><i class="fas fa-trash"></i></a>
             </td>
           </tr>
@@ -88,33 +85,5 @@
     </div>
   </div>
 </div>
-</div>
-<div class="modal" id="newArticleModal">
-  <div class="modal-dialog">
-    <div class="modal-content">
-
-      <!-- Modal Header -->
-      <div class="modal-header">
-        <h4 class="modal-title">Nuevo Articulo</h4>
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-      </div>
-      <form action="{% url 'new-article' %}" method="post">
-          {% csrf_token %}
-
-      <!-- Modal body -->
-      <div class="modal-body">
-          <table>
-              {{ form.as_table }}
-          </table>
-      </div>
-
-      <!-- Modal footer -->
-      <div class="modal-footer">
-        <button type="submit" class="btn btn-danger">Crear</button>
-      </div>
-      </form>
-
-    </div>
-  </div>
 </div>
 {% endblock %}

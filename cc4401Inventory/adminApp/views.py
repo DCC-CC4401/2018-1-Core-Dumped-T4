@@ -3,13 +3,11 @@ from django.contrib.auth.decorators import login_required
 from reservationsApp.models import Reservation
 from loansApp.models import Loan
 from articlesApp.models import Article
-from articlesApp.forms import ArticleForm
 from spacesApp.models import Space
 from mainApp.models import User
 from datetime import datetime, timedelta, date
 import pytz
 from django.utils.timezone import localtime
-
 
 @login_required
 def user_panel(request):
@@ -22,7 +20,6 @@ def user_panel(request):
     }
     return render(request, 'user_panel.html', context)
 
-
 @login_required
 def items_panel(request):
     user = request.user
@@ -30,14 +27,11 @@ def items_panel(request):
         return redirect('/')
     articles = Article.objects.all()
     spaces = Space.objects.all()
-    form = ArticleForm()
     context = {
         'articles': articles,
-        'spaces': spaces,
-        'form': form,
+        'spaces': spaces
     }
     return render(request, 'items_panel.html', context)
-
 
 @login_required
 def actions_panel(request):
@@ -53,7 +47,7 @@ def actions_panel(request):
 
     colores = {'A': 'rgba(0,153,0,0.7)',
                'P': 'rgba(51,51,204,0.7)',
-               'R': 'rgba(153, 0, 0,0.7)'}
+                'R': 'rgba(153, 0, 0,0.7)'}
 
     reservations = Reservation.objects.filter(state='P').order_by('starting_date_time')
     current_week_reservations = Reservation.objects.filter(starting_date_time__week = current_week)
@@ -96,6 +90,7 @@ def actions_panel(request):
     monday = (
         (datetime.strptime(current_date, "%Y-%m-%d") - timedelta(days=delta)).strftime("%d/%m/%Y"))
 
+
     context = {
         'reservations_query': reservations,
         'loans': loans,
@@ -114,7 +109,7 @@ def modify_reservations(request):
     if request.method == "POST":
 
         accept = True if (request.POST["accept"] == "1") else False
-        reservations = Reservation.objects.filter(id__in=request.POST.getlist("selected"))
+        reservations = Reservation.objects.filter(id__in=request.POST["selected"])
         if accept:
             for reservation in reservations:
                 reservation.state = 'A'
@@ -124,53 +119,4 @@ def modify_reservations(request):
                 reservation.state = 'R'
                 reservation.save()
 
-    return redirect('actions-panel')
-
-
-@login_required
-def lost_loans(request):
-    user = request.user
-    if not (user.is_superuser and user.is_staff):
-        return redirect('/')
-    if request.method == "POST":
-        loans = Loan.objects.filter(id__in=request.POST.getlist("loans"))
-        for loan in loans:
-            loan.state = Loan.PERDIDO
-            loan.save()
-    return redirect('actions-panel')
-
-
-@login_required
-def received_loans(request):
-    user = request.user
-    if not (user.is_superuser and user.is_staff):
-        return redirect('/')
-    if request.method == "POST":
-        loans = Loan.objects.filter(id__in=request.POST.getlist("loans"))
-        for loan in loans:
-            loan.state = Loan.RECIBIDO
-            loan.save()
-    return redirect('actions-panel')
-
-
-@login_required
-def new_article(request):
-    user = request.user
-    if not (user.is_superuser and user.is_staff):
-        return redirect('/')
-    if request.method == "POST":
-        form = ArticleForm(request.POST)
-        if form.is_valid():
-            form.save()
-        return redirect('items-panel')
-
-
-@login_required
-def delete_article(request):
-    user = request.user
-    if not (user.is_superuser and user.is_staff):
-        return redirect('/')
-    if request.method == "POST":
-        article = Article.objects.get(id=request.POST.get('article_id'))
-        article.delete()
-        return redirect('items-panel')
+    return redirect('/admin/actions-panel')
