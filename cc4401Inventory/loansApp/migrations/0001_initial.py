@@ -9,7 +9,7 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        ('spacesApp', '0001_initial'),
+        ('articlesApp', '0001_initial'),
     ]
 
     operations = [

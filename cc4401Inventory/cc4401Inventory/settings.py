@@ -121,7 +121,7 @@ LOGIN_URL = '/user/login/'
 # Internationalization
 # https://docs.djangoproject.com/en/2.0/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'es-CL'
 
 TIME_ZONE = 'America/Santiago'
 
@@ -144,3 +144,6 @@ STATICFILES_DIRS = [
     '',
 ]
 
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+
+MEDIA_URL = '/media/'
