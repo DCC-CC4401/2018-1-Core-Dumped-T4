@@ -27,7 +27,7 @@ def login_submit(request):
 
     if user is not None:
         login(request, user)
-        return redirect('/articles/')
+        return redirect('landing_page')
     else:
         messages.warning(request, 'La contraseña ingresada no es correcta o el usuario no existe')
         return redirect('/user/login')
@@ -85,4 +85,4 @@ def user_data(request, user_id):
         }
         return render(request, 'usersApp/user_profile.html', context)
     except Exception:
-        return redirect('/')
+        return redirect('landing_page')
