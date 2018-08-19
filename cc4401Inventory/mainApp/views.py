@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.utils.timezone import localtime
 import datetime
 from articlesApp.models import Article
@@ -84,3 +84,11 @@ def search(request):
 
         products = None if (request.GET['query'] == "") else articles
         return landing_search(request, products)
+
+
+@login_required
+def landing_page(request):
+    user = request.user
+    if not (user.is_superuser and user.is_staff):
+        return redirect('landing_articles')
+    return redirect('landing-panel')
