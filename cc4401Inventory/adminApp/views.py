@@ -3,20 +3,13 @@ from django.contrib.auth.decorators import login_required
 from reservationsApp.models import Reservation
 from loansApp.models import Loan
 from articlesApp.models import Article
-<<<<<<< HEAD
 from articlesApp.forms import ArticleForm
-=======
->>>>>>> 8d5f0dc9c7d71c4df133d1bb2eb024bcb21c9d21
 from spacesApp.models import Space
 from mainApp.models import User
 from datetime import datetime, timedelta, date
 import pytz
 from django.utils.timezone import localtime
 
-<<<<<<< HEAD
-
-=======
->>>>>>> 8d5f0dc9c7d71c4df133d1bb2eb024bcb21c9d21
 @login_required
 def user_panel(request):
     user = request.user
@@ -28,10 +21,6 @@ def user_panel(request):
     }
     return render(request, 'user_panel.html', context)
 
-<<<<<<< HEAD
-
-=======
->>>>>>> 8d5f0dc9c7d71c4df133d1bb2eb024bcb21c9d21
 @login_required
 def items_panel(request):
     user = request.user
@@ -39,7 +28,6 @@ def items_panel(request):
         return redirect('/')
     articles = Article.objects.all()
     spaces = Space.objects.all()
-<<<<<<< HEAD
     form = ArticleForm()
     context = {
         'articles': articles,
@@ -49,14 +37,6 @@ def items_panel(request):
     return render(request, 'items_panel.html', context)
 
 
-=======
-    context = {
-        'articles': articles,
-        'spaces': spaces
-    }
-    return render(request, 'items_panel.html', context)
-
->>>>>>> 8d5f0dc9c7d71c4df133d1bb2eb024bcb21c9d21
 @login_required
 def actions_panel(request):
     user = request.user
@@ -71,11 +51,7 @@ def actions_panel(request):
 
     colores = {'A': 'rgba(0,153,0,0.7)',
                'P': 'rgba(51,51,204,0.7)',
-<<<<<<< HEAD
                'R': 'rgba(153, 0, 0,0.7)'}
-=======
-                'R': 'rgba(153, 0, 0,0.7)'}
->>>>>>> 8d5f0dc9c7d71c4df133d1bb2eb024bcb21c9d21
 
     reservations = Reservation.objects.filter(state='P').order_by('starting_date_time')
     current_week_reservations = Reservation.objects.filter(starting_date_time__week = current_week)
@@ -118,10 +94,6 @@ def actions_panel(request):
     monday = (
         (datetime.strptime(current_date, "%Y-%m-%d") - timedelta(days=delta)).strftime("%d/%m/%Y"))
 
-<<<<<<< HEAD
-=======
-
->>>>>>> 8d5f0dc9c7d71c4df133d1bb2eb024bcb21c9d21
     context = {
         'reservations_query': reservations,
         'loans': loans,
@@ -140,11 +112,7 @@ def modify_reservations(request):
     if request.method == "POST":
 
         accept = True if (request.POST["accept"] == "1") else False
-<<<<<<< HEAD
         reservations = Reservation.objects.filter(id__in=request.POST.getlist("selected"))
-=======
-        reservations = Reservation.objects.filter(id__in=request.POST["selected"])
->>>>>>> 8d5f0dc9c7d71c4df133d1bb2eb024bcb21c9d21
         if accept:
             for reservation in reservations:
                 reservation.state = 'A'
@@ -154,7 +122,6 @@ def modify_reservations(request):
                 reservation.state = 'R'
                 reservation.save()
 
-<<<<<<< HEAD
     return redirect('actions-panel')
 
 
@@ -205,6 +172,3 @@ def delete_article(request):
         article = Article.objects.get(id=request.POST.get('article_id'))
         article.delete()
         return redirect('items-panel')
-=======
-    return redirect('/admin/actions-panel')
->>>>>>> 8d5f0dc9c7d71c4df133d1bb2eb024bcb21c9d21
