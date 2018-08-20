@@ -80,8 +80,8 @@
                                 <div class="row">
                                 {% for reservation in reservations %}
                                     <div class="col-md-6">
-                                    <div class="card mt-4">
-                                        <div class="card-body">
+                                    <div class="card mt-4" onclick="window.location.href='/reservations/{{ reservation.id }}';return false;">
+                                        <div class="card-body" >
                                             <div class="tab-pane fade show active" id="v-pills-{{ reservation.pk }}"
                                                  role="tabpanel"
                                                  aria-labelledby="v-pills-{{ reservation.pk }}-tab">

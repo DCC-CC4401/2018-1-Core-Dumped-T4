@@ -17,11 +17,11 @@
         <h1 class="article-name">
           Prestamo de {{ usuario.first_name }} {{ usuario.last_name }}
         {% if loan.state == "A" %}
-            <span class="badge badge-pill badge-success"><i class="fas fa-chevron-left"></i> {{  loan.get_state_display }}</span>
+            <span class="badge badge-pill badge-success"><i class="fas fa-chevron-left"></i> Aceptado</span>
           {% elif loan.state == "R" %}
-            <span class="badge badge-pill badge-danger"><i class="fas fa-chevron-left"></i> {{  loan.get_state_display }}</span>
+            <span class="badge badge-pill badge-danger"><i class="fas fa-chevron-left"></i> Rechazado</span>
           {% elif loan.state == "P" %}
-            <span class="badge badge-pill badge-warning"><i class="fas fa-chevron-left"></i> {{  loan.get_state_display }}</span>
+            <span class="badge badge-pill badge-warning"><i class="fas fa-chevron-left"></i> Pendiente</span>
           {% endif %}
          </h1>
       </div>
