@@ -17,9 +17,6 @@ from django.contrib.auth.decorators import login_required
 
 @login_required
 def space_data(request, space_id, date=None):
-
-
-
     try:
         space = Space.objects.get(id=space_id)
 
@@ -95,13 +92,15 @@ def space_request(request):
         if request.user.enabled:
             try:
                 string_inicio = request.POST['fecha_inicio'] + " " + request.POST['hora_inicio']
-                start_date_time = datetime.strptime(string_inicio, '%Y-%m-%d %H:%M')
+                print(string_inicio)
+                start_date_time = datetime.datetime.strptime(string_inicio, '%Y-%m-%d %H:%M')
                 string_fin = request.POST['fecha_fin'] + " " + request.POST['hora_fin']
-                end_date_time = datetime.strptime(string_fin, '%Y-%m-%d %H:%M')
+                print(string_fin)
+                end_date_time = datetime.datetime.strptime(string_fin, '%Y-%m-%d %H:%M')
 
                 if start_date_time > end_date_time:
                     messages.warning(request, 'La reserva debe terminar después de iniciar.')
-                elif start_date_time < datetime.now() + timedelta(hours=1):
+                elif start_date_time < datetime.datetime.now() + timedelta(hours=1):
                     messages.warning(request, 'Los pedidos deben ser hechos al menos con una hora de anticipación.')
                 elif start_date_time.date() != end_date_time.date():
                     messages.warning(request, 'Los pedidos deben ser devueltos el mismo día que se entregan.')
