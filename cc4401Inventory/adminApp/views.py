@@ -10,7 +10,6 @@ from datetime import datetime, timedelta, date
 import pytz
 from django.utils.timezone import localtime
 
-
 @login_required
 def user_panel(request):
     user = request.user
@@ -21,7 +20,6 @@ def user_panel(request):
         'users': users
     }
     return render(request, 'user_panel.html', context)
-
 
 @login_required
 def items_panel(request):
