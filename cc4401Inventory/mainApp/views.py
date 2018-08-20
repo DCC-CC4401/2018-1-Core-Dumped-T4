@@ -5,6 +5,8 @@ from articlesApp.models import Article
 from reservationsApp.models import Reservation
 from django.contrib.auth.decorators import login_required
 
+from spacesApp.models import Space
+
 
 @login_required
 def landing_articles(request):
@@ -13,7 +15,7 @@ def landing_articles(request):
 
 
 @login_required
-def landing_spaces(request, date=None):
+def landing_spaces(request, date=None, filter=None):
 
     if date:
         current_date = date
@@ -26,9 +28,22 @@ def landing_spaces(request, date=None):
             current_week = datetime.date.today().isocalendar()[1]
             current_date = datetime.date.today().strftime("%Y-%m-%d")
 
-    reservations = Reservation.objects.filter(starting_date_time__week = current_week, state__in = ['P','A'])
+    if request.method == 'POST':
+        filter_calendar = request.POST['espacios']
+    elif filter is not None:
+        filter_calendar = filter
+    else:
+        filter_calendar = "A"
+
+    if filter_calendar == "A":
+        reservations = Reservation.objects.filter(starting_date_time__week=current_week, state__in=['P', 'A'])
+    else:
+        reservations = Reservation.objects.filter(starting_date_time__week=current_week, state__in=['P', 'A'],
+                                                  space__name=filter_calendar)
+
     colores = {'A': 'rgba(0,153,0,0.7)',
                'P': 'rgba(51,51,204,0.7)'}
+    spaces = Space.objects.all()
 
     res_list = []
     for i in range(5):
@@ -52,7 +67,9 @@ def landing_spaces(request, date=None):
     context = {'reservations' : res_list,
                'current_date' : current_date,
                'controls' : move_controls,
-               'actual_monday' : monday}
+               'actual_monday' : monday,
+               'spaces': spaces,
+               'filter_calendar': filter_calendar}
     return render(request, 'espacios.html', context)
 
 

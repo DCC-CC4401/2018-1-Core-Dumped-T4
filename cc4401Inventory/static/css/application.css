@@ -72,3 +72,27 @@ form button[type=submit]:hover {
     text-align: right;
     font-size: 12px;
 }
+
+.list-horizontal li {
+	display:inline-block;
+}
+.list-horizontal li.a:before {
+	content: '\00a0\2022\00a0';
+	color:#79bcb5;
+	color:rgba(0,153,0,0.7);
+	font-size:22px;
+}
+
+.list-horizontal li.p:before {
+	content: '\00a0\2022\00a0';
+	color:#999;
+	color:rgba(51,51,204,0.7);
+	font-size:22px;
+}
+
+.list-horizontal li.r:before {
+	content: '\00a0\2022\00a0';
+	color:#999;
+	color:rgba(0,0,0,0.5);
+	font-size:22px;
+}
