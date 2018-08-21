@@ -34,7 +34,7 @@
 			<li class="events-group">
 				<div class="top-info"><span>Lunes</span></div>
 
-				<ul>
+				<ul onClick="modalPopUp()">
 					{% for r in reservations.0 %}
 
 					<li class="single-event" data-start="{{r.2}}" data-end="{{r.3}}" bgcolor="{{r.4}}">
@@ -51,7 +51,7 @@
 			<li class="events-group">
 				<div class="top-info"><span>Martes</span></div>
 
-				<ul>
+				<ul onClick="modalPopUp()">
 
 					{% for r in reservations.1 %}
 
@@ -68,7 +68,7 @@
 			<li class="events-group">
 				<div class="top-info"><span>Miércoles</span></div>
 
-				<ul>
+				<ul onClick="modalPopUp()">
 					{% for r in reservations.2 %}
 
 					<li class="single-event" data-start="{{r.2}}" data-end="{{r.3}}" bgcolor="{{r.4}}">
@@ -84,7 +84,7 @@
 			<li class="events-group">
 				<div class="top-info"><span>Jueves</span></div>
 
-				<ul>
+				<ul onClick="modalPopUp()">
 					{% for r in reservations.3 %}
 
 					<li class="single-event" data-start="{{r.2}}" data-end="{{r.3}}" bgcolor="{{r.4}}">
@@ -100,7 +100,7 @@
 			<li class="events-group">
 				<div class="top-info"><span>Viernes</span></div>
 
-				<ul>
+				<ul onClick="modalPopUp()">
 					{% for r in reservations.4 %}
 
 					<li class="single-event" data-start="{{r.2}}" data-end="{{r.3}}" bgcolor="{{r.4}}">
@@ -159,6 +159,86 @@
 
 	<div class="cover-layer"></div>
 </div> <!-- .cd-schedule -->
+
+
+<button id="botonEscondido" type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal"
+        style="display: none">
+    Open modal
+</button>
+
+<div class="modal" id="myModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Reserva de Espacio</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <form name="crearReserva" id="crearReserva" method="post" action="{% url 'space_request' %}">
+								{% csrf_token %}
+
+								<input type="hidden" name="space_id" value="{{ space.id }}">
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <table>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label>Fecha inicio: </label>
+                            </div>
+                            <div class="col-md-8">
+                                <input name="fecha_inicio" type="date" name="desde"/> <label><i
+                                    class="far fa-calendar-alt"></i></label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label>Hora inicio: </label>
+                            </div>
+                            <div class="col-md-8">
+                                <input name="hora_inicio" type="time" name="asdad"/>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label>Fecha fin: </label>
+                            </div>
+                            <div class="col-md-8">
+                                <input name="fecha_fin" type="date" name="desde"/> <label><i
+                                    class="far fa-calendar-alt"></i></label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label>Hora fin: </label>
+                            </div>
+                            <div class="col-md-8">
+                                <input name="hora_fin" type="time" name="asdad"/>
+                            </div>
+                        </div>
+                    </table>
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <input type="submit" class="btn btn-danger" data-dismiss="modal" value="Crear Reserva" onClick="document.forms['crearReserva'].submit();"/>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+
+<script>
+    var x = document.getElementById('botonEscondido');
+
+    function modalPopUp() {
+        x.click()
+    }
+</script>
+
 <script src="{% static 'js/modernizr.js' %}"></script>
 <script src="{% static 'js/jquery-3.0.0.min.js' %}"></script>
 

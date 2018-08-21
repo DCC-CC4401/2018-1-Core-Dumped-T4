@@ -48,53 +48,13 @@
 
     <div class = "col-md-5 offset-1">
       <h3 class="block-title">Solicitar reserva</h3>
-        <form name="space_request" action="{% url 'space_request' %}" method="post" class="reservation-form">
-          {% csrf_token %}
-          <input type="hidden" name="space_id" value="{{ space.id }}">
-
-          <div class = "row">
-            <div class="col-md-4">
-              <label>Fecha inicio: </label>
-            </div>
-            <div class="col-md-8">
-              <input name="fecha_inicio" type = "date" name = "desde" /> <label><i class="far fa-calendar-alt"></i></label>
-            </div>
-          </div>
-          <div class = "row">
-            <div class="col-md-4">
-              <label>Hora inicio: </label>
-            </div>
-            <div class="col-md-8">
-              <input name="hora_inicio" type = "time" name = "asdad" />
-            </div>
-          </div>
-
-          <div class = "row">
-            <div class="col-md-4">
-              <label>Fecha fin: </label>
-            </div>
-            <div class="col-md-8">
-              <input name="fecha_fin" type = "date" name = "desde" /> <label><i class="far fa-calendar-alt"></i></label>
-            </div>
-          </div>
-          <div class = "row">
-            <div class="col-md-4">
-              <label>Hora fin: </label>
-            </div>
-            <div class="col-md-8">
-              <input name="hora_fin" type = "time" name = "asdad" />
-            </div>
-          </div>
-          <div class = "row" onClick="document.forms['space_request'].submit();">
-            {% include '_schedule.html' %}
-          </div>
-        </form>
-        <div class="row" style="margin-top: 2em;">
+      <div class="row" style="margin-top: 2em;">
         <div class="col-6 offset-3 schedule-current-week" style="text-align: center;">
           <div class="alert alert-info">
             <p>Estás viendo la semana del lunes <b>{{ actual_monday }}</b></p>
           </div>
         </div>
+      {% include '_schedule.html' %}
     </div>
 
 
