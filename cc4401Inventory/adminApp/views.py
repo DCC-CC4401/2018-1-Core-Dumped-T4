@@ -75,6 +75,7 @@ def actions_panel(request):
     for r in current_week_reservations:
         reserv = list()
         reserv.append(r.space.name)
+        reserv.append(r.space.id)
         reserv.append(localtime(r.starting_date_time).strftime("%H:%M"))
         reserv.append(localtime(r.ending_date_time).strftime("%H:%M"))
         reserv.append(colores[r.state])
