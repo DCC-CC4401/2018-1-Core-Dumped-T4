@@ -2,306 +2,164 @@
 <head>
     <link rel="stylesheet" href="{% static 'mainApp/css/schedule_reset.css' %}"> <!-- CSS reset -->
 </head>
-
-<div class="col-4">
-    <div class="input-group mb-3">
-        <div class="input-group-prepend">
-            <label class="input-group-text" for="inputGroupSelect01">Espacios</label>
-        </div>
-        <form id="myform" method="post" action="{% url 'landing_spaces' date=current_date filter=filter_calendar %}">
-            {% csrf_token %}
-            <select id="calendarFilter" name="espacios" class="custom-select">
-                <option value="A" {% if filter_calendar == "A" %}selected{% endif %}>---</option>
-                {% for i in spaces %}
-                    <option value="{{ i.name }}"
-                            {% if filter_calendar == i.name %}selected{% endif %}>{{ i.name }}</option>
-                {% endfor %}
-            </select>
-        </form>
-    </div>
-
-    <div class="center-column">
-        <ul class="list-horizontal">
-            <li class="a"><span style="font-size: 1em">Aceptado</span></li>
-            <li class="p"><span style="font-size: 1em">Pendiente</span></li>
-        </ul>
-    </div>
-
-</div>
-
-
 <div class="cd-schedule loading">
-    <div class="timeline" id="timeline">
-        <ul>
-            <li><span>09:00</span></li>
-            <li><span>09:30</span></li>
-            <li><span>10:00</span></li>
-            <li><span>10:30</span></li>
-            <li><span>11:00</span></li>
-            <li><span>11:30</span></li>
-            <li><span>12:00</span></li>
-            <li><span>12:30</span></li>
-            <li><span>13:00</span></li>
-            <li><span>13:30</span></li>
-            <li><span>14:00</span></li>
-            <li><span>14:30</span></li>
-            <li><span>15:00</span></li>
-            <li><span>15:30</span></li>
-            <li><span>16:00</span></li>
-            <li><span>16:30</span></li>
-            <li><span>17:00</span></li>
-            <li><span>17:30</span></li>
-            <li><span>18:00</span></li>
-        </ul>
-    </div> <!-- .timeline -->
-    <div id="line-container" class="line-container">
-        <div id="line" class="clock"></div>
-        <div class="message" id="message"></div>
-    </div>
-    <div class="events" id="events">
-        <ul>
-            <li class="events-group">
-                <div class="top-info"><span>Lunes</span></div>
+	<div class="timeline" id="timeline">
+		<ul>
+			<li><span>09:00</span></li>
+			<li><span>09:30</span></li>
+			<li><span>10:00</span></li>
+			<li><span>10:30</span></li>
+			<li><span>11:00</span></li>
+			<li><span>11:30</span></li>
+			<li><span>12:00</span></li>
+			<li><span>12:30</span></li>
+			<li><span>13:00</span></li>
+			<li><span>13:30</span></li>
+			<li><span>14:00</span></li>
+			<li><span>14:30</span></li>
+			<li><span>15:00</span></li>
+			<li><span>15:30</span></li>
+			<li><span>16:00</span></li>
+			<li><span>16:30</span></li>
+			<li><span>17:00</span></li>
+			<li><span>17:30</span></li>
+			<li><span>18:00</span></li>
+		</ul>
+	</div> <!-- .timeline -->
+	<div id="line-container" class="line-container">
+	<div id="line" class="clock"></div><div class="message" id="message"></div>
+		</div>
+	<div class="events" id="events">
+		<ul>
+			<li class="events-group">
+				<div class="top-info"><span>Lunes</span></div>
 
-                <ul onClick="modalPopUp()">
-                    {% for r in reservations.0 %}
+				<ul>
+					{% for r in reservations.0 %}
 
-                        <li class="single-event" data-start="{{ r.2 }}" data-end="{{ r.3 }}" bgcolor="{{ r.4 }}">
-                            <a>
-                                <em class="event-name">{{ r.0 }}</em>
-                            </a>
-                        </li>
+					<li class="single-event" data-start="{{r.2}}" data-end="{{r.3}}" bgcolor="{{r.4}}">
+						<a onClick="location.href = '{% url 'space_data' r.1 %}';">
+							<em class="event-name">{{r.0}}</em>
+						</a>
+					</li>
 
-                    {% endfor %}
+					{% endfor%}
 
-                </ul>
-            </li>
+				</ul>
+			</li>
 
-            <li class="events-group">
-                <div class="top-info"><span>Martes</span></div>
+			<li class="events-group">
+				<div class="top-info"><span>Martes</span></div>
 
-                <ul onClick="modalPopUp()">
+				<ul>
 
-                    {% for r in reservations.1 %}
+					{% for r in reservations.1 %}
 
-                        <li class="single-event" data-start="{{ r.2 }}" data-end="{{ r.3 }}" bgcolor="{{ r.4 }}">
-                            <a>
-                                <em class="event-name">{{ r.0 }}</em>
-                            </a>
-                        </li>
+					<li class="single-event" data-start="{{r.2}}" data-end="{{r.3}}" bgcolor="{{r.4}}">
+						<a onClick="location.href = '{% url 'space_data' r.1 %}';">
+							<em class="event-name">{{r.0}}</em>
+						</a>
+					</li>
 
-                    {% endfor %}
-                </ul>
-            </li>
+					{% endfor%}
+				</ul>
+			</li>
 
-            <li class="events-group">
-                <div class="top-info"><span>Miércoles</span></div>
+			<li class="events-group">
+				<div class="top-info"><span>Miércoles</span></div>
 
-                <ul onClick="modalPopUp()">
-                    {% for r in reservations.2 %}
+				<ul>
+					{% for r in reservations.2 %}
 
-                        <li class="single-event" data-start="{{ r.2 }}" data-end="{{ r.3 }}" bgcolor="{{ r.4 }}">
-                            <a onClick="location.href = '{% url 'space_data' r.1 %}';">
-                                <em class="event-name">{{ r.0 }}</em>
-                            </a>
-                        </li>
+					<li class="single-event" data-start="{{r.2}}" data-end="{{r.3}}" bgcolor="{{r.4}}">
+						<a onClick="location.href = '{% url 'space_data' r.1 %}';">
+							<em class="event-name">{{r.0}}</em>
+						</a>
+					</li>
 
-                    {% endfor %}
-                </ul>
-            </li>
+					{% endfor%}
+				</ul>
+			</li>
 
-            <li class="events-group">
-                <div class="top-info"><span>Jueves</span></div>
+			<li class="events-group">
+				<div class="top-info"><span>Jueves</span></div>
 
-                <ul onClick="modalPopUp()">
-                    {% for r in reservations.3 %}
+				<ul>
+					{% for r in reservations.3 %}
 
-                        <li class="single-event" data-start="{{ r.2 }}" data-end="{{ r.3 }}" bgcolor="{{ r.4 }}">
-                            <a onClick="location.href = '{% url 'space_data' r.1 %}';">
-                                <em class="event-name">{{ r.0 }}</em>
-                            </a>
-                        </li>
+					<li class="single-event" data-start="{{r.2}}" data-end="{{r.3}}" bgcolor="{{r.4}}">
+						<a onClick="location.href = '{% url 'space_data' r.1 %}';">
+							<em class="event-name">{{r.0}}</em>
+						</a>
+					</li>
 
-                    {% endfor %}
-                </ul>
-            </li>
+					{% endfor%}
+				</ul>
+			</li>
 
-            <li class="events-group">
-                <div class="top-info"><span>Viernes</span></div>
+			<li class="events-group">
+				<div class="top-info"><span>Viernes</span></div>
 
-                <ul onClick="modalPopUp()">
-                    {% for r in reservations.4 %}
+				<ul>
+					{% for r in reservations.4 %}
 
-                        <li class="single-event" data-start="{{ r.2 }}" data-end="{{ r.3 }}" bgcolor="{{ r.4 }}">
-                            <a onClick="location.href = '{% url 'space_data' r.1 %}';">
-                                <em class="event-name">{{ r.0 }}</em>
-                            </a>
-                        </li>
+					<li class="single-event" data-start="{{r.2}}" data-end="{{r.3}}" bgcolor="{{r.4}}">
+						<a onClick="location.href = '{% url 'space_data' r.1 %}';">
+							<em class="event-name">{{r.0}}</em>
+						</a>
+					</li>
 
-                    {% endfor %}
-                </ul>
-            </li>
-        </ul>
+					{% endfor%}
+				</ul>
+			</li>
+		</ul>
 
-    </div>
-
-    <div class="week-select" id="week-select">
-        <div style="text-align: center; margin-right: auto; margin-left: auto; width: 200px; font-size: 18px">
-            <form action="" method="get" class="selectform">
-                <a href="{% url 'landing_spaces' date=controls.0 filter=filter_calendar %}" role="button"><i
-                        class="fas fa-angle-double-left"></i></a>
-            </form>
-            <form action="" method="get" class="selectform">
-                <a href="{% url 'landing_spaces' date=controls.1 filter=filter_calendar %}" role="button"><i
-                        class="fas fa-angle-left"></i></a>
-            </form>
-            <form action="" method="get" class="selectform">
-                <a href="{% url 'landing_spaces' date=controls.2 filter=filter_calendar %}" role="button"><i
-                        class="fas fa-angle-right"></i></a>
-            </form>
-            <form action="" method="get" class="selectform">
-                <a href="{% url 'landing_spaces' date=controls.3 filter=filter_calendar %}" role="button"><i
-                        class="fas fa-angle-double-right"></i></a>
-            </form>
-        </div>
-
-    </div>
+	</div>
 
 
-    <div class="event-modal">
-        <header class="header">
-            <div class="content">
-                <span class="event-date"></span>
-                <h3 class="event-name"></h3>
-            </div>
 
-            <div class="header-bg"></div>
-        </header>
+	<div class="week-select" id="week-select">
+		<div style="text-align: center; margin-right: auto; margin-left: auto; width: 200px; font-size: 18px">
+			<form action="" method="get" class="selectform">
+				<a href="?date={{controls.0}}" role="button"><i class="fas fa-angle-double-left"></i></a>
+			</form>
+			<form action="" method="get" class="selectform">
+				<a href="?date={{controls.1}}" role="button"><i class="fas fa-angle-left"></i></a>
+			</form>
+			<form action="" method="get" class="selectform">
+				<a href="?date={{controls.2}}" role="button"><i class="fas fa-angle-right"></i></a>
+			</form>
+			<form action="" method="get" class="selectform">
+				<a href="?date={{controls.3}}" role="button"><i class="fas fa-angle-double-right"></i></a>
+			</form>
+		</div>
 
-        <div class="body">
-            <div class="event-info"></div>
-            <div class="body-bg"></div>
-        </div>
+	</div>
 
-        <a href="#0" class="close">Close</a>
-    </div>
 
-    <div class="cover-layer"></div>
+
+
+	<div class="event-modal">
+		<header class="header">
+			<div class="content">
+				<span class="event-date"></span>
+				<h3 class="event-name"></h3>
+			</div>
+
+			<div class="header-bg"></div>
+		</header>
+
+		<div class="body">
+			<div class="event-info"></div>
+			<div class="body-bg"></div>
+		</div>
+
+		<a href="#0" class="close">Close</a>
+	</div>
+
+	<div class="cover-layer"></div>
 </div> <!-- .cd-schedule -->
-
-<button id="botonEscondido" type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal"
-        style="display: none">
-    Open modal
-</button>
-
-<!-- The Modal -->
-<div class="modal" id="myModal">
-    <div class="modal-dialog">
-        <div class="modal-content">
-
-            <!-- Modal Header -->
-            <div class="modal-header">
-                <h4 class="modal-title">Reserva de Espacio</h4>
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-            </div>
-
-            <form name="crearReserva" id="crearReserva" method="post" action="{% url 'create_reservation' %}">
-								{% csrf_token %}
-                <!-- Modal body -->
-                <div class="modal-body">
-                    <table>
-                        <div class="row">
-                            <div class="col-md-4">
-                                <label>Espacio: </label>
-                            </div>
-                            <div class="col-md-8">
-                                <select id="nombreEspacio" name="nombreEspacio" class="custom-select">
-                                    {% for i in spaces %}
-                                        <option value="{{ i.id }}">{{ i.name }}</option>
-                                    {% endfor %}
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-md-4">
-                                <label>Fecha inicio: </label>
-                            </div>
-                            <div class="col-md-8">
-                                <input name="fecha_inicio" type="date" name="desde"/> <label><i
-                                    class="far fa-calendar-alt"></i></label>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-4">
-                                <label>Hora inicio: </label>
-                            </div>
-                            <div class="col-md-8">
-                                <input name="hora_inicio" type="time" name="asdad"/>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-md-4">
-                                <label>Fecha fin: </label>
-                            </div>
-                            <div class="col-md-8">
-                                <input name="fecha_fin" type="date" name="desde"/> <label><i
-                                    class="far fa-calendar-alt"></i></label>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-4">
-                                <label>Hora fin: </label>
-                            </div>
-                            <div class="col-md-8">
-                                <input name="hora_fin" type="time" name="asdad"/>
-                            </div>
-                        </div>
-                    </table>
-                </div>
-
-                <!-- Modal footer -->
-                <div class="modal-footer">
-                    <input type="submit" class="btn btn-danger" data-dismiss="modal" value="Crear Reserva" onClick="document.forms['crearReserva'].submit();"/>
-                </div>
-            </form>
-
-        </div>
-    </div>
-</div>
-
-<script>
-    var x = document.getElementById('botonEscondido');
-
-    function modalPopUp() {
-        x.click()
-    }
-
-</script>
-
 <script src="{% static 'js/modernizr.js' %}"></script>
 <script src="{% static 'js/jquery-3.0.0.min.js' %}"></script>
 
 <script src="{% static 'js/main.js' %}"></script> <!-- Resource jQuery -->
-
-<script>
-
-    $("#calendarFilter").on('change', function () {
-				console.log("poto");
-        $("#myform").submit();
-        $('.single-event').each(function () {
-            if ($("#calendarFilter").val() === "A") {
-                $(this).show();
-            }
-            else if ($(this).attr("name") !== $("#calendarFilter").val()) {
-                $(this).hide();
-            }
-            else {
-                $(this).show();
-            }
-        });
-        event.preventDefault();
-        $("#myform").val();
-    });
-</script>
