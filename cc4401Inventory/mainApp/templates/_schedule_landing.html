@@ -37,8 +37,8 @@
 				<ul>
 					{% for r in reservations.0 %}
 
-					<li class="single-event" data-start="{{r.1}}" data-end="{{r.2}}" bgcolor="{{r.3}}">
-						<a href="">
+					<li class="single-event" data-start="{{r.2}}" data-end="{{r.3}}" bgcolor="{{r.4}}">
+						<a onClick="location.href = '{% url 'space_data' r.1 %}';">
 							<em class="event-name">{{r.0}}</em>
 						</a>
 					</li>
@@ -55,8 +55,8 @@
 
 					{% for r in reservations.1 %}
 
-					<li class="single-event" data-start="{{r.1}}" data-end="{{r.2}}" bgcolor="{{r.3}}">
-						<a href="">
+					<li class="single-event" data-start="{{r.2}}" data-end="{{r.3}}" bgcolor="{{r.4}}">
+						<a onClick="location.href = '{% url 'space_data' r.1 %}';">
 							<em class="event-name">{{r.0}}</em>
 						</a>
 					</li>
@@ -71,8 +71,8 @@
 				<ul>
 					{% for r in reservations.2 %}
 
-					<li class="single-event" data-start="{{r.1}}" data-end="{{r.2}}" bgcolor="{{r.3}}" >
-						<a href="">
+					<li class="single-event" data-start="{{r.2}}" data-end="{{r.3}}" bgcolor="{{r.4}}">
+						<a onClick="location.href = '{% url 'space_data' r.1 %}';">
 							<em class="event-name">{{r.0}}</em>
 						</a>
 					</li>
@@ -87,8 +87,8 @@
 				<ul>
 					{% for r in reservations.3 %}
 
-					<li class="single-event" data-start="{{r.1}}" data-end="{{r.2}}"  bgcolor="{{r.3}}">
-						<a href="">
+					<li class="single-event" data-start="{{r.2}}" data-end="{{r.3}}" bgcolor="{{r.4}}">
+						<a onClick="location.href = '{% url 'space_data' r.1 %}';">
 							<em class="event-name">{{r.0}}</em>
 						</a>
 					</li>
@@ -103,8 +103,8 @@
 				<ul>
 					{% for r in reservations.4 %}
 
-					<li class="single-event" data-start="{{r.1}}" data-end="{{r.2}}" bgcolor="{{r.3}}">
-						<a href="">
+					<li class="single-event" data-start="{{r.2}}" data-end="{{r.3}}" bgcolor="{{r.4}}">
+						<a onClick="location.href = '{% url 'space_data' r.1 %}';">
 							<em class="event-name">{{r.0}}</em>
 						</a>
 					</li>

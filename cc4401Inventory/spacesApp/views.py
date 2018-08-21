@@ -41,6 +41,7 @@ def space_data(request, space_id, date=None):
         for r in reservations:
             reserv = []
             reserv.append(r.space.name)
+            reserv.append(r.space.id)
             reserv.append(localtime(r.starting_date_time).strftime("%H:%M"))
             reserv.append(localtime(r.ending_date_time).strftime("%H:%M"))
             reserv.append(colores[r.state])
