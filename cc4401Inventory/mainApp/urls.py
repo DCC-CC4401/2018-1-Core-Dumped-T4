@@ -7,4 +7,6 @@ urlpatterns = [
     path('spaces/', views.landing_spaces, name='landing_spaces'),
     path('spaces/<str:date>/<str:filter>', views.landing_spaces, name='landing_spaces'),
     path('search/', views.search, name='search'),
+    path('create_reservation/', views.crear_reserva1, name='create_reservation'),
 ]
+

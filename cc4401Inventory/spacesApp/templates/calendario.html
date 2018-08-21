@@ -63,11 +63,11 @@
             <li class="events-group">
                 <div class="top-info"><span>Lunes</span></div>
 
-                <ul onClick="modalPopUp()">
+                <ul>
                     {% for r in reservations.0 %}
 
                         <li class="single-event" data-start="{{ r.2 }}" data-end="{{ r.3 }}" bgcolor="{{ r.4 }}">
-                            <a>
+                            <a onClick="location.href = '{% url 'space_data' r.1 %}';">
                                 <em class="event-name">{{ r.0 }}</em>
                             </a>
                         </li>
@@ -80,12 +80,12 @@
             <li class="events-group">
                 <div class="top-info"><span>Martes</span></div>
 
-                <ul onClick="modalPopUp()">
+                <ul>
 
                     {% for r in reservations.1 %}
 
                         <li class="single-event" data-start="{{ r.2 }}" data-end="{{ r.3 }}" bgcolor="{{ r.4 }}">
-                            <a>
+                            <a onClick="location.href = '{% url 'space_data' r.1 %}';">
                                 <em class="event-name">{{ r.0 }}</em>
                             </a>
                         </li>
@@ -97,7 +97,7 @@
             <li class="events-group">
                 <div class="top-info"><span>Miércoles</span></div>
 
-                <ul onClick="modalPopUp()">
+                <ul>
                     {% for r in reservations.2 %}
 
                         <li class="single-event" data-start="{{ r.2 }}" data-end="{{ r.3 }}" bgcolor="{{ r.4 }}">
@@ -113,7 +113,7 @@
             <li class="events-group">
                 <div class="top-info"><span>Jueves</span></div>
 
-                <ul onClick="modalPopUp()">
+                <ul>
                     {% for r in reservations.3 %}
 
                         <li class="single-event" data-start="{{ r.2 }}" data-end="{{ r.3 }}" bgcolor="{{ r.4 }}">
@@ -129,7 +129,7 @@
             <li class="events-group">
                 <div class="top-info"><span>Viernes</span></div>
 
-                <ul onClick="modalPopUp()">
+                <ul>
                     {% for r in reservations.4 %}
 
                         <li class="single-event" data-start="{{ r.2 }}" data-end="{{ r.3 }}" bgcolor="{{ r.4 }}">
@@ -148,19 +148,19 @@
     <div class="week-select" id="week-select">
         <div style="text-align: center; margin-right: auto; margin-left: auto; width: 200px; font-size: 18px">
             <form action="" method="get" class="selectform">
-                <a href="{% url 'landing_spaces' date=controls.0 filter=filter_calendar %}" role="button"><i
+                <a href="{% url 'landing_spaces' date=controls.0 %}" role="button"><i
                         class="fas fa-angle-double-left"></i></a>
             </form>
             <form action="" method="get" class="selectform">
-                <a href="{% url 'landing_spaces' date=controls.1 filter=filter_calendar %}" role="button"><i
+                <a href="{% url 'landing_spaces' date=controls.1 %}" role="button"><i
                         class="fas fa-angle-left"></i></a>
             </form>
             <form action="" method="get" class="selectform">
-                <a href="{% url 'landing_spaces' date=controls.2 filter=filter_calendar %}" role="button"><i
+                <a href="{% url 'landing_spaces' date=controls.2 %}" role="button"><i
                         class="fas fa-angle-right"></i></a>
             </form>
             <form action="" method="get" class="selectform">
-                <a href="{% url 'landing_spaces' date=controls.3 filter=filter_calendar %}" role="button"><i
+                <a href="{% url 'landing_spaces' date=controls.3 %}" role="button"><i
                         class="fas fa-angle-double-right"></i></a>
             </form>
         </div>
@@ -189,117 +189,7 @@
     <div class="cover-layer"></div>
 </div> <!-- .cd-schedule -->
 
-<button id="botonEscondido" type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal"
-        style="display: none">
-    Open modal
-</button>
-
-<!-- The Modal -->
-<div class="modal" id="myModal">
-    <div class="modal-dialog">
-        <div class="modal-content">
-
-            <!-- Modal Header -->
-            <div class="modal-header">
-                <h4 class="modal-title">Reserva de Espacio</h4>
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-            </div>
-
-            <form id="crearReserva" method="post" action="{% url 'create_reservation' %}">
-                <!-- Modal body -->
-                <div class="modal-body">
-                    <table>
-                        <div class="row">
-                            <div class="col-md-4">
-                                <label>Espacio: </label>
-                            </div>
-                            <div class="col-md-8">
-                                <select id="nombreEspacio" name="nombreEspacio" class="custom-select">
-                                    {% for i in spaces %}
-                                        <option value="{{ i.id }}">{{ i.name }}</option>
-                                    {% endfor %}
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-md-4">
-                                <label>Fecha inicio: </label>
-                            </div>
-                            <div class="col-md-8">
-                                <input name="fecha_inicio" type="date" name="desde"/> <label><i
-                                    class="far fa-calendar-alt"></i></label>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-4">
-                                <label>Hora inicio: </label>
-                            </div>
-                            <div class="col-md-8">
-                                <input name="hora_inicio" type="time" name="asdad"/>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-md-4">
-                                <label>Fecha fin: </label>
-                            </div>
-                            <div class="col-md-8">
-                                <input name="fecha_fin" type="date" name="desde"/> <label><i
-                                    class="far fa-calendar-alt"></i></label>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-4">
-                                <label>Hora fin: </label>
-                            </div>
-                            <div class="col-md-8">
-                                <input name="hora_fin" type="time" name="asdad"/>
-                            </div>
-                        </div>
-                    </table>
-                </div>
-
-                <!-- Modal footer -->
-                <div class="modal-footer">
-                    <button type="submit" class="btn btn-danger" data-dismiss="modal">Crear reserva</button>
-                </div>
-            </form>
-
-        </div>
-    </div>
-</div>
-
-<script>
-    var x = document.getElementById('botonEscondido');
-
-    function modalPopUp() {
-        x.click()
-    }
-
-</script>
-
 <script src="{% static 'js/modernizr.js' %}"></script>
 <script src="{% static 'js/jquery-3.0.0.min.js' %}"></script>
 
 <script src="{% static 'js/main.js' %}"></script> <!-- Resource jQuery -->
-
-<script>
-
-    $("#calendarFilter").on('change', function () {
-        $("#myform").submit();
-        $('.single-event').each(function () {
-            if ($("#calendarFilter").val() === "A") {
-                $(this).show();
-            }
-            else if ($(this).attr("name") !== $("#calendarFilter").val()) {
-                $(this).hide();
-            }
-            else {
-                $(this).show();
-            }
-        });
-        event.preventDefault();
-        $("#myform").val();
-    });
-</script>
