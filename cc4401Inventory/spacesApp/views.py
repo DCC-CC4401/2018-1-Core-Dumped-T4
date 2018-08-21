@@ -79,6 +79,7 @@ def space_data(request, space_id, date=None):
 def verificar_horario_habil(horario):
     if horario.isocalendar()[2] > 5:
         return False
+    
     if horario.hour < 9 or horario.hour > 18:
         return False
 
@@ -105,7 +106,7 @@ def space_request(request):
                     messages.warning(request, 'Los pedidos deben ser hechos al menos con una hora de anticipación.')
                 elif start_date_time.date() != end_date_time.date():
                     messages.warning(request, 'Los pedidos deben ser devueltos el mismo día que se entregan.')
-                elif not verificar_horario_habil(start_date_time) and not verificar_horario_habil(end_date_time):
+                elif not verificar_horario_habil(start_date_time) or not verificar_horario_habil(end_date_time):
                     messages.warning(request, 'Los pedidos deben ser hechos en horario hábil.')
                 else:
                     res = Reservation(space=space, starting_date_time=start_date_time, ending_date_time=end_date_time,
