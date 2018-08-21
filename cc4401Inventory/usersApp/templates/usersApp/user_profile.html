@@ -186,7 +186,7 @@
                                                     active {% endif %}"
                                                          id="v-pills-{{ loan.pk }}"
                                                          role="tabpanel"
-                                                         aria-labelledby="v-pills-{{ loan.pk }}-tab">
+                                                         aria-labelledby="v-pills-{{ loan.pk }}-tab" onclick="window.location.href='/loans/{{ loan.id }}';return false;">
 
                                                         <div class="d-flex w-100 justify-content-between">
                                                             <h2 class="mb-1">{{ loan.article.name }}</h2>
