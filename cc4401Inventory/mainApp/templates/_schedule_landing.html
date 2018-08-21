@@ -8,7 +8,7 @@
         <div class="input-group-prepend">
             <label class="input-group-text" for="inputGroupSelect01">Espacios</label>
         </div>
-        <form id="myform" method="post" action="{% url 'landing_spaces' date=current_date filter=filter_calendar %}">
+        <form id="myform" method="post" action="{% url 'landing_spaces_filter' date=current_date filter=filter_calendar %}">
             {% csrf_token %}
             <select id="calendarFilter" name="espacios" class="custom-select">
                 <option value="A" {% if filter_calendar == "A" %}selected{% endif %}>---</option>
@@ -148,19 +148,19 @@
     <div class="week-select" id="week-select">
         <div style="text-align: center; margin-right: auto; margin-left: auto; width: 200px; font-size: 18px">
             <form action="" method="get" class="selectform">
-                <a href="{% url 'landing_spaces' date=controls.0 filter=filter_calendar %}" role="button"><i
+                <a href="{% url 'landing_spaces_filter' date=controls.0 filter=filter_calendar %}" role="button"><i
                         class="fas fa-angle-double-left"></i></a>
             </form>
             <form action="" method="get" class="selectform">
-                <a href="{% url 'landing_spaces' date=controls.1 filter=filter_calendar %}" role="button"><i
+                <a href="{% url 'landing_spaces_filter' date=controls.1 filter=filter_calendar %}" role="button"><i
                         class="fas fa-angle-left"></i></a>
             </form>
             <form action="" method="get" class="selectform">
-                <a href="{% url 'landing_spaces' date=controls.2 filter=filter_calendar %}" role="button"><i
+                <a href="{% url 'landing_spaces_filter' date=controls.2 filter=filter_calendar %}" role="button"><i
                         class="fas fa-angle-right"></i></a>
             </form>
             <form action="" method="get" class="selectform">
-                <a href="{% url 'landing_spaces' date=controls.3 filter=filter_calendar %}" role="button"><i
+                <a href="{% url 'landing_spaces_filter' date=controls.3 filter=filter_calendar %}" role="button"><i
                         class="fas fa-angle-double-right"></i></a>
             </form>
         </div>
