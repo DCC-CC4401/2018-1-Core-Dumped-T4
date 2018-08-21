@@ -205,7 +205,8 @@
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
 
-            <form id="crearReserva" method="post" action="{% url 'create_reservation' %}">
+            <form name="crearReserva" id="crearReserva" method="post" action="{% url 'create_reservation' %}">
+								{% csrf_token %}
                 <!-- Modal body -->
                 <div class="modal-body">
                     <table>
@@ -262,7 +263,7 @@
 
                 <!-- Modal footer -->
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-danger" data-dismiss="modal">Crear reserva</button>
+                    <input type="submit" class="btn btn-danger" data-dismiss="modal" value="Crear Reserva" onClick="document.forms['crearReserva'].submit();"/>
                 </div>
             </form>
 
@@ -287,6 +288,7 @@
 <script>
 
     $("#calendarFilter").on('change', function () {
+				console.log("poto");
         $("#myform").submit();
         $('.single-event').each(function () {
             if ($("#calendarFilter").val() === "A") {
