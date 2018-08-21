@@ -1,0 +1,77 @@
+
+{% extends 'application_layout.html' %}
+
+{% load static %}
+
+{% block title %}
+  Ficha de la reserva: {{ reservation.id }}
+{% endblock %}
+
+
+{% block body %}
+
+  <div class="row">
+    <div class="col-md-4 offset-1">
+    <!-- Hay que usar la palabra usuario, no user, o sino se buguea el header-->
+      <div class="row">
+        <h1 class="article-name">
+          Reserva de {{ usuario.first_name }} {{ usuario.last_name }}
+        {% if reservation.state == "A" %}
+            <span class="badge badge-pill badge-success"><i class="fas fa-chevron-left"></i> Aceptado</span>
+          {% elif reservation.state == "R" %}
+            <span class="badge badge-pill badge-danger"><i class="fas fa-chevron-left"></i> Rechazado</span>
+          {% elif reservation.state == "P" %}
+            <span class="badge badge-pill badge-warning"><i class="fas fa-chevron-left"></i> Pendiente</span>
+          {% endif %}
+         </h1>
+      </div>
+
+
+      <div class="card">
+        <div class="card-header article-description-title">Resumen de la reserva</div>
+        <div class="card-body">
+             <div class="row">
+                 <div class="col-sm-6">
+                     {% if space.image %}
+                         <img src= " {% static article.image.url %}" class="img-fluid" alt="Foto" />
+                     {% else %}
+                         <img class="card-img-top" src="{% static 'img/items/default_article.jpg' %}" alt="Card image cap">
+                     {% endif %}
+                 </div>
+                 <div class="col-sm-6">
+                     {% if space.description %}
+                     <p class="card-text">{{space.description}}</p>
+                     {% else %}
+                     <p class="card-text">No hay descripción disponible</p>
+                     {%  endif %}
+                 </div>
+             </div>
+         </div>
+      </div>
+    </div>
+
+    <div class = "col-md-5 offset-2">
+      <h3 class="block-title">Detalles de la reserva</h3>
+      <div class="card">
+        <div class="card body">
+            <b>Fecha inicio: {{ reservation.starting_date_time }}</b>
+            <b>Fecha termino: {{ reservation.ending_date_time }}</b>
+        </div>
+      </div>
+        <div class = "row reservation-history-container">
+        <div class="row-centered">
+            <form method="POST" action="{% url 'delete_reservation'%}">{% csrf_token %}
+            <!-- El currentuser es el usuario que está logueado, lo pasa por diccionario en el view de la pagina -->
+            <!-- Así el botón solo se muestra si es que el que hizo la reserva es el mismo que está viendola -->
+            {% if usuario.id == currentuser.id and space.state != 'L' %}
+                {% if reservation.state == 'P' %}
+                    <input hidden id="reservation-{{ reservation.id }}" name="reservation" value="{{ reservation.id }}" >
+                    <input class="delete-button" type="submit" value="Eliminar Reserva">
+                {% endif %}
+            {% endif %}
+            </form>
+        </div>
+    </div>
+
+  </div>
+{% endblock %}

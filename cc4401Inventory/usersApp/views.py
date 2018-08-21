@@ -27,7 +27,7 @@ def login_submit(request):
 
     if user is not None:
         login(request, user)
-        return redirect('/articles/')
+        return redirect('landing_page')
     else:
         messages.warning(request, 'La contraseña ingresada no es correcta o el usuario no existe')
         return redirect('/user/login')
@@ -60,10 +60,15 @@ def signup_submit(request):
             messages.warning(request, 'Ya existe una cuenta con ese rut')
             return redirect('/user/signup/')
         else:
-            user = User.objects.create_user(first_name=first_name, email=email, password=password, rut = rut)
+            user = User.objects.create_user(
+                first_name=first_name,
+                last_name=last_name,
+                email=email,
+                password=password,
+                rut=rut)
             login(request, user)
-            messages.success(request, 'Bienvenid@, ' + user.first_name + ' ya puedes comenzar a hacer reservas :)')
-            return redirect('/articles/')
+            messages.success(request, 'Bienvenid@, {} ya puedes comenzar a hacer reservas :)'.format(first_name))
+            return redirect('landing_articles')
 
 
 @login_required
@@ -85,4 +90,4 @@ def user_data(request, user_id):
         }
         return render(request, 'usersApp/user_profile.html', context)
     except Exception:
-        return redirect('/')
+        return redirect('landing_page')

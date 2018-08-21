@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.utils.timezone import localtime
 import datetime
 from articlesApp.models import Article
@@ -51,6 +51,7 @@ def landing_spaces(request, date=None, filter=None):
     for r in reservations:
         reserv = []
         reserv.append(r.space.name)
+        reserv.append(r.space.id)
         reserv.append(localtime(r.starting_date_time).strftime("%H:%M"))
         reserv.append(localtime(r.ending_date_time).strftime("%H:%M"))
         reserv.append(colores[r.state])
@@ -101,3 +102,11 @@ def search(request):
 
         products = None if (request.GET['query'] == "") else articles
         return landing_search(request, products)
+
+
+@login_required
+def landing_page(request):
+    user = request.user
+    if not (user.is_superuser and user.is_staff):
+        return redirect('landing_articles')
+    return redirect('landing-panel')
