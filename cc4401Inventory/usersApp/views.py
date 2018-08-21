@@ -67,7 +67,7 @@ def signup_submit(request):
                 password=password,
                 rut=rut)
             login(request, user)
-            messages.success(request, 'Bienvenid@, ' + user.first_name + ' ya puedes comenzar a hacer reservas :)')
+            messages.success(request, 'Bienvenid@, {} ya puedes comenzar a hacer reservas :)'.format(first_name))
             return redirect('landing_articles')
 
 

@@ -137,7 +137,6 @@ def space_data_admin(request, space_id):
 
 @login_required
 def space_edit_name(request, space_id):
-
     if request.method == "POST":
         a = Space.objects.get(id=space_id)
         a.name = request.POST["name"]
@@ -147,7 +146,6 @@ def space_edit_name(request, space_id):
 
 @login_required
 def space_edit_image(request, space_id):
-
     if request.method == "POST":
         u_file = request.FILES["image"]
         extension = os.path.splitext(u_file.name)[1]
@@ -164,6 +162,16 @@ def space_edit_description(request, space_id):
     if request.method == "POST":
         a = Space.objects.get(id=space_id)
         a.description = request.POST["description"]
+        a.save()
+
+    return redirect('/space/' + str(space_id) + '/edit')
+
+
+@login_required
+def space_edit_capacity(request, space_id):
+    if request.method == "POST":
+        a = Space.objects.get(id=space_id)
+        a.capacity = request.POST["capacity"]
         a.save()
 
     return redirect('/space/' + str(space_id) + '/edit')
