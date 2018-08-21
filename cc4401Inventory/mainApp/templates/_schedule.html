@@ -2,6 +2,35 @@
 <head>
     <link rel="stylesheet" href="{% static 'mainApp/css/schedule_reset.css' %}"> <!-- CSS reset -->
 </head>
+
+<script>
+	function amIclicked(e, element)
+	{
+		e = e || event;
+		var target = e.target || e.srcElement;
+		if(target.id==element.id)
+			return true;
+		else
+			return false;
+	}
+	
+	function spaceLink(e, element, url)
+	{
+		e.cancelBubble=true;
+		if(e.stopPropagation) e.stopPropagation();
+		if(amIclicked(e, element)) {
+			location.href = url;
+		}
+	}
+	
+	function requestLink(e, element)
+	{
+		if(e && amIclicked(e, element)) {
+			modalPopUp();
+		}
+	}
+</script>
+
 <div class="cd-schedule loading">
 	<div class="timeline" id="timeline">
 		<ul>
@@ -34,11 +63,11 @@
 			<li class="events-group">
 				<div class="top-info"><span>Lunes</span></div>
 
-				<ul onClick="modalPopUp()">
+				<ul onClick="requestLink(event, this)">
 					{% for r in reservations.0 %}
 
 					<li class="single-event" data-start="{{r.2}}" data-end="{{r.3}}" bgcolor="{{r.4}}">
-						<a onClick="location.href = '{% url 'space_data' r.1 %}';">
+						<a onClick="spaceLink(event, this, '{% url 'space_data' r.1 %}');">
 							<em class="event-name">{{r.0}}</em>
 						</a>
 					</li>
@@ -51,12 +80,12 @@
 			<li class="events-group">
 				<div class="top-info"><span>Martes</span></div>
 
-				<ul onClick="modalPopUp()">
+				<ul onClick="requestLink(event, this)">
 
 					{% for r in reservations.1 %}
 
 					<li class="single-event" data-start="{{r.2}}" data-end="{{r.3}}" bgcolor="{{r.4}}">
-						<a onClick="location.href = '{% url 'space_data' r.1 %}';">
+						<a onClick="spaceLink(event, this, '{% url 'space_data' r.1 %}');">
 							<em class="event-name">{{r.0}}</em>
 						</a>
 					</li>
@@ -68,11 +97,11 @@
 			<li class="events-group">
 				<div class="top-info"><span>Miércoles</span></div>
 
-				<ul onClick="modalPopUp()">
+				<ul onClick="requestLink(event, this)">
 					{% for r in reservations.2 %}
 
 					<li class="single-event" data-start="{{r.2}}" data-end="{{r.3}}" bgcolor="{{r.4}}">
-						<a onClick="location.href = '{% url 'space_data' r.1 %}';">
+						<a onClick="spaceLink(event, this, '{% url 'space_data' r.1 %}');">
 							<em class="event-name">{{r.0}}</em>
 						</a>
 					</li>
@@ -84,11 +113,11 @@
 			<li class="events-group">
 				<div class="top-info"><span>Jueves</span></div>
 
-				<ul onClick="modalPopUp()">
+				<ul onClick="requestLink(event, this)">
 					{% for r in reservations.3 %}
 
 					<li class="single-event" data-start="{{r.2}}" data-end="{{r.3}}" bgcolor="{{r.4}}">
-						<a onClick="location.href = '{% url 'space_data' r.1 %}';">
+						<a onClick="spaceLink(event, this, '{% url 'space_data' r.1 %}');">
 							<em class="event-name">{{r.0}}</em>
 						</a>
 					</li>
@@ -100,11 +129,11 @@
 			<li class="events-group">
 				<div class="top-info"><span>Viernes</span></div>
 
-				<ul onClick="modalPopUp()">
+				<ul onClick="requestLink(event, this)">
 					{% for r in reservations.4 %}
 
 					<li class="single-event" data-start="{{r.2}}" data-end="{{r.3}}" bgcolor="{{r.4}}">
-						<a onClick="location.href = '{% url 'space_data' r.1 %}';">
+						<a onClick="spaceLink(event, this, '{% url 'space_data' r.1 %}');">
 							<em class="event-name">{{r.0}}</em>
 						</a>
 					</li>
@@ -232,11 +261,10 @@
 </div>
 
 <script>
-    var x = document.getElementById('botonEscondido');
-
     function modalPopUp() {
-        x.click()
+        $("#myModal").modal()
     }
+
 </script>
 
 <script src="{% static 'js/modernizr.js' %}"></script>
